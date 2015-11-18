@@ -1,4 +1,4 @@
-## Programming Assignment 2 for Corsea Class
+## Programming Assignment 2 for Coursea Class
 ## Two functions for dealing with matrix storage and calculation of inverse
 ## makeCacheMatrix recives a matrix as input and provides means to store the ionverse as well
 ## cacheSolve - used for calculating inverse, also checks if invesre is already stored
@@ -16,20 +16,28 @@
 makeCacheMatrix <- function(x = matrix()) {
         
         #x shuuld be a square matrix
-        # assignment states that we can assume the matrix can be inversed - so this feature is optional 
+        # assignment states that we can assume "matrix supplied is always invertable" 
+        # so this feature is optional 
         if(ncol(x)!=nrow(x)){  stop("You must pass a square matrix to this function") }
 
         #m stores the matrix, i stores the innverse - initially i is null
         m<<-x
         i<<-NULL
         
-        #No setter function needed - only get
+        #getter and setter functions
+        set<-function(x){
+                #If user is setting new value for the matrix 
+                #then we need to clear the existing invesrse
+                        m<<-x
+                        i<<-NULL
+                }
+        
         get <- function() m
         setinverse <- function(inverse) i<<-inverse
         getinverse <- function() i
         
         #List that is returned to the caller incudes the getter and setter functions
-        list(get=get,setinverse=setinverse,getinverse=getinverse)
+        list(get=get,set=set,setinverse=setinverse,getinverse=getinverse)
 }
 
 
@@ -63,4 +71,69 @@ cacheSolve <- function(x, ...) {
         
         #Return the inverse 
         inv
+}
+
+#Function for simple testing
+#Not part of assignment - but helps in checking that everything works
+testcahceMatrix<-function(){
+        message("Creating a matrix and storing to z - console will show z")
+        z <- matrix(c(2,1,3,4,2,5,5,7,1,2,4,6,8,2,4,6),4,4)
+        print(z)
+        
+        readline("Hit enter to continue")
+        
+        message("Using makeCachematrix to store z")
+        mat <- makeCacheMatrix(z)
+        message("calling get function from makeCacheMatrix - should return the original matrix")
+        o <- mat$get()
+        print(o)
+        readline("Hit enter to continue")
+        
+        message("Checking to see if inverse is stored - we have not run solve yet so should be null")
+        o<-mat$getinverse()
+        print(o)
+        readline("Hit enter to continue")
+        
+        message("running cacheSolve should store and display the inverse")
+        o<-cacheSolve(mat)
+        print(o)
+        readline("Hit enter to continue")
+        message("running cacheSolve again - this time it should be cached and should report as such")
+        o<-cacheSolve(mat)
+        print(o)
+        
+        readline("Hit enter to continue")
+        message("Showing matrix times its inverse")
+        m1<-mat$get()
+        m2<-mat$getinverse()
+        f <- m1 %*% m2
+        print(f)
+        readline("Hit enter to continue")
+        
+        message("setting new value for the matrix and calling get")
+        z<-matrix(c(2,1,3,4),2,2)
+        mat$set(z)
+        o <- mat$get()
+        print(o)
+        readline("Hit enter to continue")
+        
+        message("Checking to see if inverse is stored - invesrse should have been set to null because matrix changed")
+        o<-mat$getinverse()
+        print(o)
+        readline("Hit enter to continue")
+        
+        message("running cacheSolve should store and display the inverse")
+        o<-cacheSolve(mat)
+        print(o)
+        readline("Hit enter to continue")
+        message("running cacheSolve again - this time it should be cached and should report as such")
+        o<-cacheSolve(mat)
+        print(o)
+        
+        readline("Hit enter to continue")
+        message("Showing matrix times its inverse")
+        m1<-mat$get()
+        m2<-mat$getinverse()
+        f <- m1 %*% m2
+        print(f)
 }
