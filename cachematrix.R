@@ -1,10 +1,10 @@
 ## Programming Assignment 2 for Corsea Class
 ## Two functions for dealing with matrix storage and calculation of inverse
 ## makeCacheMatrix recives a matrix as input and provides means to store the ionverse as well
-##CacheSolve - used for calculating inverse, also checks if invesre is already stored
+## cacheSolve - used for calculating inverse, also checks if invesre is already stored
 
 ## Usage:
-## call makeCacheMatrix passing in a aquare matrix - assign the output to a variable
+## call makeCacheMatrix passing in a square matrix - assign the output to a variable
 ## ex:   z<- makeCacheMatrix(matrix(c(1,2,3,4),2,2))
 ## call cacheSolve against the output from makeCahceMatrix 
 ## ex: cacheSolve(z)
@@ -14,12 +14,11 @@
 ## Function that takes a marix and stores it allowing get, also allows for storing of the matrix inverse
 ## Assume we will get a square matrix as input
 makeCacheMatrix <- function(x = matrix()) {
+        
         #x shuuld be a square matrix
-        if(ncol(x)!=nrow(x)){
-                stop("You must pass a square matrix to this function")
-        }
+        # assignment states that we can assume the matrix can be inversed - so this feature is optional 
+        if(ncol(x)!=nrow(x)){  stop("You must pass a square matrix to this function") }
 
-        #Variables used by code internally
         #m stores the matrix, i stores the innverse - initially i is null
         m<<-x
         i<<-NULL
@@ -34,8 +33,8 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## cahceSolve function - handles the calculation of inverse from teh matrix
-## Designed to work with the makeCacheMatrix function
+## cahceSolve function - handles the calculation of inverse
+## Designed to work with the makeCacheMatrix function (see usage info in earlier comments)
 ## assumes that the object passed in contains a function to set the inverse
 ## assumes the object passed in contains a function to check if the inverse was already stored "getinverse"
 
@@ -48,7 +47,7 @@ cacheSolve <- function(x, ...) {
         
         if (!is.null(inv)){
                 # inverse was not null, so we can get it from cache
-                message("getting cached data")
+                message("Invesre already in cache - showing stored inverse")
                 
                 #Return and exit
                 return(inv)   
@@ -56,7 +55,7 @@ cacheSolve <- function(x, ...) {
         #Get the current matrix
         data<-x$get()
         
-        #Get Inverse
+        #Calculate the Inverse
         inv <- solve(data) 
         
         #Set Inverse on x so it gets added to cache
