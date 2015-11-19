@@ -1,6 +1,6 @@
 ## Programming Assignment 2 for Coursea Class
 ## Two functions for dealing with matrix storage and calculation of inverse
-## makeCacheMatrix recives a matrix as input and provides means to store the ionverse as well
+## makeCacheMatrix recives a matrix as input and provides means to store the inverse
 ## cacheSolve - used for calculating inverse, also checks if invesre is already stored
 
 ## Usage:
