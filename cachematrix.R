@@ -15,11 +15,6 @@
 ## Assume we will get a square matrix as input
 makeCacheMatrix <- function(x = matrix()) {
         
-        #x shuuld be a square matrix
-        # assignment states that we can assume "matrix supplied is always invertable" 
-        # so this feature is optional 
-        if(ncol(x)!=nrow(x)){  stop("You must pass a square matrix to this function") }
-
         #m stores the matrix, i stores the innverse - initially i is null
         m<<-x
         i<<-NULL
